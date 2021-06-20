@@ -4,10 +4,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ActiveClientModel {
-    Client fgClient;
+    IClient fgClient;
     BlockingQueue<Runnable> dispatchQueue = new LinkedBlockingQueue<>();
 
-    public ActiveClientModel() {
+    public ActiveClientModel(IClient clientModel) {
+        this.fgClient = clientModel;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -40,5 +41,16 @@ public class ActiveClientModel {
                 }
             });
         } catch(Exception e) { }
+    }
+
+    public void write(String command, int value) {
+        try {
+            dispatchQueue.put(new Runnable() {
+                @Override
+                public void run() {
+                    fgClient.write(command, value);
+                }
+            });
+        } catch(Exception e) {}
     }
 }

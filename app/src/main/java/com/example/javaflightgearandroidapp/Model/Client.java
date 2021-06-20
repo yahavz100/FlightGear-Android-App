@@ -1,20 +1,29 @@
 package com.example.javaflightgearandroidapp.Model;
 
+import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Observable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Client extends Observable implements IClient{
+public class Client implements IClient{
     private String connectionStatus;
-    private final Socket accessServer;
+    private Socket accessServer;
+    private Map<String, String> axes;
 
     public Client() {
         connectionStatus = "Disconnected";
         accessServer = new Socket();
+        axes = new HashMap<>();
+        axes.put("Aileron", "set/controls/flight/aileron");
+        axes.put("Elevator","set/controls/flight/elevator");
+        axes.put("Rudder", "set/controls/flight/rudder");
+        axes.put("Throttle", "set/controls/flight/current-engine/throttle");
     }
 
     /*Function attempt to connect to server according to given IPAddress and Port, in a case
-     * of a unsuccessful connection disconnects, else changes connection status
+     * of a unsuccessful connection disconnects, changes connection status accordingly
      */
     @Override
     public void connect(String IPAddress, int port) {
@@ -24,19 +33,12 @@ public class Client extends Observable implements IClient{
         }
         //Attempt to connect to server via socket, defined timeout of 10 seconds
         try {
-            int integerIP = Integer.parseInt(IPAddress);
-            InetSocketAddress inetSocketAddress = new InetSocketAddress(integerIP);
-            int timeout = 10000;
-            accessServer.connect(inetSocketAddress, timeout);
-            //ipAddress = IPAddress;
-            //this.port = port;
-            setChanged();
-            notifyObservers();
+            accessServer = new Socket(IPAddress, port);
+            connectionStatus = "Connected";
             //In case of Exception, disconnect from server
         } catch (Exception e) {
             disconnect();
         }
-        connectionStatus = "Connected";
     }
 
     /*Function attempt to disconnect from current connected server, if done successfully changes
@@ -56,9 +58,21 @@ public class Client extends Observable implements IClient{
             //In case of Exception do nothing, default - change connection status
         } catch (Exception ignored) {
         } finally {
-            //ipAddress = "0.0.0.0";
-            //port = 0;
             connectionStatus = "Disconnected";
         }
+    }
+
+    /*Function write bytes into output stream of connected socket,
+     * synchronized for safe writing, catch Exception and do nothing
+     */
+    @Override
+    public void write(String command, int value) {
+        PrintWriter outputWriter;
+        try {
+            outputWriter = new PrintWriter(accessServer.getOutputStream(), true);
+            String commandFg = axes.get(command)+ value + "\r\n";
+            outputWriter.print(commandFg);
+            outputWriter.flush();
+        } catch(Exception e) { }
     }
 }
