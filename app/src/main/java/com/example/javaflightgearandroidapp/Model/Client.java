@@ -16,10 +16,10 @@ public class Client implements IClient{
         connectionStatus = "Disconnected";
         accessServer = new Socket();
         axes = new HashMap<>();
-        axes.put("Aileron", "set/controls/flight/aileron");
-        axes.put("Elevator","set/controls/flight/elevator");
-        axes.put("Rudder", "set/controls/flight/rudder");
-        axes.put("Throttle", "set/controls/flight/current-engine/throttle");
+        axes.put("Aileron", "set /controls/flight/aileron ");
+        axes.put("Elevator","set /controls/flight/elevator ");
+        axes.put("Rudder", "set /controls/flight/rudder ");
+        axes.put("Throttle", "set /controls/engines/current-engine/throttle ");
     }
 
     /*Function attempt to connect to server according to given IPAddress and Port, in a case
@@ -28,7 +28,7 @@ public class Client implements IClient{
     @Override
     public void connect(String IPAddress, int port) {
         //Check if already connected to a server
-        if(connectionStatus.equals("Connected")) {
+        if(getConnectionStatus().equals("Connected")) {
             disconnect();
         }
         //Attempt to connect to server via socket, defined timeout of 10 seconds
@@ -39,6 +39,7 @@ public class Client implements IClient{
         } catch (Exception e) {
             disconnect();
         }
+        System.out.println(connectionStatus);
     }
 
     /*Function attempt to disconnect from current connected server, if done successfully changes
@@ -47,7 +48,7 @@ public class Client implements IClient{
     @Override
     public void disconnect() {
         //Check if already not connected to any server
-        if (connectionStatus.equals("Disconnected")) {
+        if (getConnectionStatus().equals("Disconnected")) {
             return;
         }
         //Attempt to disconnect from server
@@ -66,7 +67,7 @@ public class Client implements IClient{
      * synchronized for safe writing, catch Exception and do nothing
      */
     @Override
-    public void write(String command, int value) {
+    public void write(String command, float value) {
         PrintWriter outputWriter;
         try {
             outputWriter = new PrintWriter(accessServer.getOutputStream(), true);
@@ -75,4 +76,10 @@ public class Client implements IClient{
             outputWriter.flush();
         } catch(Exception e) { }
     }
+
+    @Override
+    public String getConnectionStatus() {
+        return connectionStatus;
+    }
+
 }

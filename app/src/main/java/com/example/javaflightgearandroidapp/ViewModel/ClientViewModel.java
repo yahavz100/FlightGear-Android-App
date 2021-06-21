@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.javaflightgearandroidapp.Model.ActiveClientModel;
 
-public class ConnectionViewModel {
+public class ClientViewModel {
     private ActiveClientModel activeClientModel;
     //public MutableLiveData<String> propertyConnectionStatus;
 
-    public ConnectionViewModel(ActiveClientModel activeClientModel) {
+    public ClientViewModel(ActiveClientModel activeClientModel) {
         this.activeClientModel = activeClientModel;
     }
 
@@ -18,5 +18,9 @@ public class ConnectionViewModel {
 
     public void disconnect() {
         activeClientModel.assembleDisconnection();
+    }
+
+    public void send(String command, float value) {
+        activeClientModel.write(command, value);
     }
 }

@@ -43,7 +43,7 @@ public class ActiveClientModel {
         } catch(Exception e) { }
     }
 
-    public void write(String command, int value) {
+    public void write(String command, float value) {
         try {
             dispatchQueue.put(new Runnable() {
                 @Override
