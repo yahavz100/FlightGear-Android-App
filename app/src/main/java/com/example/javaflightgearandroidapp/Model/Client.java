@@ -77,7 +77,6 @@ public class Client implements IClient{
         } catch(Exception e) { }
     }
 
-    @Override
     public String getConnectionStatus() {
         return connectionStatus;
     }

@@ -4,5 +4,5 @@ public interface IClient {
     void connect(String IPAddress, int port);
     void disconnect();
     void write(String command, float value);
-    String getConnectionStatus();
+    public String getConnectionStatus();
 }
