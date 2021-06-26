@@ -1,8 +1,6 @@
 package com.example.javaflightgearandroidapp.Model;
 
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +37,6 @@ public class Client implements IClient{
         } catch (Exception e) {
             disconnect();
         }
-        System.out.println(connectionStatus);
     }
 
     /*Function attempt to disconnect from current connected server, if done successfully changes

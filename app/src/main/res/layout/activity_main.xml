@@ -1,99 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/kisspng_airplane_flight_aircraft_clip_art_sky_aviation_aircraft_vector_material_5aa1c7dfb51407_7886168215205519037417">
 
 
     <com.jackandphantom.joystickview.JoyStickView
         android:id="@+id/Joystick1"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="258dp"
+        android:layout_height="213dp"
         android:layout_alignParentBottom="true"
         app:innerCircleColor="#151414"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.659"
+        app:layout_constraintHorizontal_bias="0.581"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.262"
         app:outerCircleBorderColor="#fff"
         app:outerCircleBorderWidth="5"
         app:outerCircleColor="#a6a9551e"
         app:shadowColor="#000"
-        app:shadowRadius="7" />
+        app:shadowRadius="7">
+
+    </com.jackandphantom.joystickview.JoyStickView>
 
     <EditText
         android:id="@+id/IPAddress"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="19dp"
         android:hint="Enter IP address"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/connectButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/port"
         android:layout_width="80dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="19dp"
         android:hint="Port"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/disconnectButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintStart_toEndOf="@+id/IPAddress"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/connectButton"
-        android:layout_width="110dp"
+        android:layout_width="135dp"
         android:layout_height="45dp"
         android:onClick="connectToServer"
         android:text="Connect"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115">
+        app:layout_constraintVertical_bias="0.375">
 
     </Button>
 
+    <Button
+        android:id="@+id/disconnectButton"
+        android:layout_width="135dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="19dp"
+        android:onClick="disconnectFromServer"
+        android:text="Disconnect"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toEndOf="@+id/connectButton"
+        app:layout_constraintTop_toBottomOf="@+id/IPAddress"
+        app:layout_constraintVertical_bias="0.0"/>
+
     <TextView
         android:id="@+id/connectionStatusTextView"
-        android:layout_width="125dp"
-        android:layout_height="41dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="92dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="31dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.854"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toEndOf="@+id/disconnectButton"
+        app:layout_constraintTop_toBottomOf="@+id/port"
+        app:layout_constraintVertical_bias="0.0" />
 
     <SeekBar
         android:id="@+id/throttleSeekBar"
-        android:layout_width="200dp"
+        android:layout_width="255dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="236dp"
+        android:layout_marginEnd="212dp"
         android:rotation="270"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.486" />
+        app:layout_constraintVertical_bias="0.646" />
 
     <SeekBar
         android:id="@+id/rudderSeekBar"
-        android:layout_width="200dp"
+        android:layout_width="255dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.691" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.725" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Rudder"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rudderSeekBar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Throttle"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/throttleSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.218" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="301dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

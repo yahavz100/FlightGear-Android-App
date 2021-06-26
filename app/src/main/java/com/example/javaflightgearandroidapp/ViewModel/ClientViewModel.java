@@ -1,13 +1,13 @@
 package com.example.javaflightgearandroidapp.ViewModel;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.javaflightgearandroidapp.Model.ActiveClientModel;
 
-public class ClientViewModel {
-    private ActiveClientModel activeClientModel;
-    //public MutableLiveData<String> propertyConnectionStatus;
+import java.io.Serializable;
 
+public class ClientViewModel implements Serializable {
+    private ActiveClientModel activeClientModel;
+
+    //Using given active client model, client view model transfer data from view to model
     public ClientViewModel(ActiveClientModel activeClientModel) {
         this.activeClientModel = activeClientModel;
     }

@@ -1,9 +1,18 @@
 package com.example.javaflightgearandroidapp;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,41 +30,57 @@ public class MainActivity extends AppCompatActivity {
     private ClientViewModel cvm = new ClientViewModel(acm);
 
     TextView connectionStatusTV;
+    Handler handler = null;
+    final int delay = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        handler = new Handler();
+
         //Create connection status TextView
         connectionStatusTV = findViewById(R.id.connectionStatusTextView);
+        connectionStatusTV.setText(cm.getConnectionStatus());
 
+        //Create custom color
+        int lightGrey = Color.rgb(90, 136, 203);
 
+        //Paint button in color
+        Button connectBtn = findViewById(R.id.connectButton);
+        connectBtn.setBackgroundColor(lightGrey);
+        connectBtn.setTextColor(Color.BLACK);
+
+        //Paint button in color
+        Button discBtn = findViewById(R.id.disconnectButton);
+        discBtn.setBackgroundColor(lightGrey);
+        discBtn.setTextColor(Color.BLACK);
+
+        //Create joystick and customize it
         JoyStickView joyStickView = findViewById(R.id.Joystick1);
+        joyStickView.setInnerCircleColor(Color.RED);
+        joyStickView.setOuterCircleColor(Color.GRAY);
+        joyStickView.setOuterCircleBorderColor(Color.BLACK);
+
+        //Add a listener on move to joystick, send data to model on movement
         joyStickView.setOnMoveListener(new JoyStickView.OnMoveListener() {
             @Override
             public void onMove(double angle, float strength) {
                 strength = strength / 100;
                 float dy = (float) (strength * (Math.cos(Math.toRadians(angle))));
                 float dx = (float) (strength * (Math.sin(Math.toRadians(angle))));
-                System.out.println("x:"+dx +", y:"+dy);
                 cvm.send("Aileron", dy);
                 cvm.send("Elevator", dx);
             }
         });
 
-
-
-//        int period = 1000;  //todo invoke disconnect or add status button?
-//        new Timer().scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                connectionStatusTV.setText(cm.getConnectionStatus());//todo maybe run connect?
-//            }
-//        }, 0, period);
-
         //Create throttle SeekBar
         SeekBar throttleSeekBar = findViewById(R.id.throttleSeekBar);
+        throttleSeekBar.getThumb().setColorFilter(lightGrey, PorterDuff.Mode.MULTIPLY);
+        throttleSeekBar.getProgressDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+
+        //Add a listener on move to seekbar, send data to model on movement
         throttleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -78,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
         //Create rudder SeekBar
         SeekBar rudderSeekBar = findViewById(R.id.rudderSeekBar);
         rudderSeekBar.setProgress(50);
+        rudderSeekBar.getThumb().setColorFilter(lightGrey, PorterDuff.Mode.MULTIPLY);
+        rudderSeekBar.getProgressDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+
+        //Add a listener on move to seekbar, send data to model on movement
         rudderSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -100,25 +129,38 @@ public class MainActivity extends AppCompatActivity {
 
     //Function connect to FlightGear server when button connect is clicked
     public void connectToServer(View view) {
+        //Create textView for IP
         EditText ipEditText = findViewById(R.id.IPAddress);
         String ipVal = ipEditText.getText().toString().trim();
 
+        //Create textView for Port
         EditText portEditText = findViewById(R.id.port);
         String portVal = portEditText.getText().toString().trim();
         int intPortVal = Integer.parseInt(portVal);
 
-        final Handler handler = new Handler();
-        final int delay = 1000; // 1000 milliseconds == 1 second
-
+        handler.removeCallbacksAndMessages(null);
+        //Every second connect to server(in order to maintain connection status updated)
         handler.postDelayed(new Runnable() {
             public void run() {
-                System.out.println("myHandler: here!");
                 cvm.connect(ipVal, intPortVal);
-                //connectionStatusTV.setText(cm.getConnectionStatus());
-
+                connectionStatusTV.setText(cm.getConnectionStatus());
                 handler.postDelayed(this, delay);
             }
         }, delay);
+    }
+
+    //Function terminate connection to FlightGear server when button is clicked
+    public void disconnectFromServer(View view) {
+
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                cvm.disconnect();
+                connectionStatusTV.setText(cm.getConnectionStatus());
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+
     }
 
     @Override
