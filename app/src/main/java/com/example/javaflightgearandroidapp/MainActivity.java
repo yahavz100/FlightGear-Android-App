@@ -1,6 +1,5 @@
 package com.example.javaflightgearandroidapp;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -151,11 +150,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.setMessage("Check your IP Address/Port, " +
                     "maybe FlightGear Simulator server is down?");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                    (dialog, which) -> dialog.dismiss());
             alertDialog.show();
         }
     }
