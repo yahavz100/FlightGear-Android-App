@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private final ActiveClientModel acm = new ActiveClientModel(cm);
     private final ClientViewModel cvm = new ClientViewModel(acm);
 
-    TextView connectionStatusTV;
-    Handler handler = null;
-    final int delay = 1000;
+    private TextView connectionStatusTV;
+    private Handler handler = null;
+    private final int delay = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Function connect to FlightGear server when button connect is clicked
-    public void connectToServer(View view) {
+    public void connectToServer() {
         //Create textView for IP
         EditText ipEditText = findViewById(R.id.IPAddress);
         String ipVal = ipEditText.getText().toString().trim();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Function terminate connection to FlightGear server when button is clicked
-    public void disconnectFromServer(View view) {
+    public void disconnectFromServer() {
 
         handler.removeCallbacksAndMessages(null);
         handler.postDelayed(new Runnable() {

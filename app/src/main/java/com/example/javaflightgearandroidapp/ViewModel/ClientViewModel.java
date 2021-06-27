@@ -4,7 +4,7 @@ import com.example.javaflightgearandroidapp.Model.ActiveClientModel;
 
 import java.io.Serializable;
 
-public class ClientViewModel implements Serializable {
+public class ClientViewModel {
     private final ActiveClientModel activeClientModel;
 
     //Using given active client model, client view model transfer data from view to model

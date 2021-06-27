@@ -2,7 +2,7 @@ package com.example.javaflightgearandroidapp.Model;
 
 public interface IClient {
     //Function connect to server using ip and port given
-    void connect(String IPAddress, int port);
+    void connect(String ipAddress, int port);
 
     //Function disconnect from current server
     void disconnect();

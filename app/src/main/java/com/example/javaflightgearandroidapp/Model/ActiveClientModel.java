@@ -4,8 +4,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ActiveClientModel {
-    IClient fgClient;
-    BlockingQueue<Runnable> dispatchQueue = new LinkedBlockingQueue<>();
+    private final IClient fgClient;
+    private final BlockingQueue<Runnable> dispatchQueue = new LinkedBlockingQueue<>();
 
     //Using Active Model design pattern, implemented by dispatch queue, insert tasks to execute
     //asyc inorder to keep application responding to user
@@ -30,7 +30,7 @@ public class ActiveClientModel {
     //Function insert disconnect method to queue
     public void assembleDisconnection() {
         try {
-            dispatchQueue.put(() -> fgClient.disconnect());
+            dispatchQueue.put(fgClient::disconnect);
         } catch(Exception e) { }
     }
 

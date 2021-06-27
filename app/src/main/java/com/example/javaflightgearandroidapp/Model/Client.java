@@ -24,14 +24,14 @@ public class Client implements IClient{
      * of a unsuccessful connection disconnects, changes connection status accordingly
      */
     @Override
-    public void connect(String IPAddress, int port) {
+    public void connect(String ipAddress, int port) {
         //Check if already connected to a server
         if(getConnectionStatus().equals("Connected")) {
             disconnect();
         }
         //Attempt to connect to server via socket, defined timeout of 10 seconds
         try {
-            accessServer = new Socket(IPAddress, port);
+            accessServer = new Socket(ipAddress, port);
             connectionStatus = "Connected";
             //In case of Exception, disconnect from server
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class Client implements IClient{
             accessServer.shutdownOutput();
             accessServer.close();
             //In case of Exception do nothing, default - change connection status
-        } catch (Exception ignored) {
+        } catch (Exception e) {
         } finally {
             connectionStatus = "Disconnected";
         }
