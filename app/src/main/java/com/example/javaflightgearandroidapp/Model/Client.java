@@ -8,7 +8,7 @@ import java.util.Map;
 public class Client implements IClient{
     private String connectionStatus;
     private Socket accessServer;
-    private Map<String, String> axes;
+    private final Map<String, String> axes;
 
     public Client() {
         connectionStatus = "Disconnected";

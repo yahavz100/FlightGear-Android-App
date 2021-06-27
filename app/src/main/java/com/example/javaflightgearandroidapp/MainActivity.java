@@ -1,18 +1,12 @@
 package com.example.javaflightgearandroidapp;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -25,9 +19,9 @@ import com.example.javaflightgearandroidapp.ViewModel.ClientViewModel;
 import com.jackandphantom.joystickview.JoyStickView;
 
 public class MainActivity extends AppCompatActivity {
-    private IClient cm = new Client();
-    private ActiveClientModel acm = new ActiveClientModel(cm);
-    private ClientViewModel cvm = new ClientViewModel(acm);
+    private final IClient cm = new Client();
+    private final ActiveClientModel acm = new ActiveClientModel(cm);
+    private final ClientViewModel cvm = new ClientViewModel(acm);
 
     TextView connectionStatusTV;
     Handler handler = null;
@@ -64,15 +58,12 @@ public class MainActivity extends AppCompatActivity {
         joyStickView.setOuterCircleBorderColor(Color.BLACK);
 
         //Add a listener on move to joystick, send data to model on movement
-        joyStickView.setOnMoveListener(new JoyStickView.OnMoveListener() {
-            @Override
-            public void onMove(double angle, float strength) {
-                strength = strength / 100;
-                float dy = (float) (strength * (Math.cos(Math.toRadians(angle))));
-                float dx = (float) (strength * (Math.sin(Math.toRadians(angle))));
-                cvm.send("Aileron", dy);
-                cvm.send("Elevator", dx);
-            }
+        joyStickView.setOnMoveListener((angle, strength) -> {
+            strength = strength / 100;
+            float dy = (float) (strength * (Math.cos(Math.toRadians(angle))));
+            float dx = (float) (strength * (Math.sin(Math.toRadians(angle))));
+            cvm.send("Aileron", dy);
+            cvm.send("Elevator", dx);
         });
 
         //Create throttle SeekBar

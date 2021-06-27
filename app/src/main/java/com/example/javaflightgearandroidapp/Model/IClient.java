@@ -11,5 +11,5 @@ public interface IClient {
     void write(String command, float value);
 
     //Function returns connection status to server
-    public String getConnectionStatus();
+    String getConnectionStatus();
 }
