@@ -15,7 +15,9 @@ public class ActiveClientModel {
             while (true) {
                 try {
                     dispatchQueue.take().run();
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
@@ -24,20 +26,26 @@ public class ActiveClientModel {
     public void assembleConnection(String ipAddr, int port) {
         try {
             dispatchQueue.put(() -> fgClient.connect(ipAddr, port));
-        } catch(Exception e) { }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Function insert disconnect method to queue
     public void assembleDisconnection() {
         try {
             dispatchQueue.put(fgClient::disconnect);
-        } catch(Exception e) { }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Function insert write method to queue
     public void write(String command, float value) {
         try {
             dispatchQueue.put(() -> fgClient.write(command, value));
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }

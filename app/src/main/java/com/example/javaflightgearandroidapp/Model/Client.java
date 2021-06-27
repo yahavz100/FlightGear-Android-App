@@ -35,6 +35,8 @@ public class Client implements IClient{
             connectionStatus = "Connected";
             //In case of Exception, disconnect from server
         } catch (Exception e) {
+            connectionStatus = "Disconnected";
+            e.printStackTrace();
             disconnect();
         }
     }
@@ -55,6 +57,7 @@ public class Client implements IClient{
             accessServer.close();
             //In case of Exception do nothing, default - change connection status
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             connectionStatus = "Disconnected";
         }
@@ -71,7 +74,9 @@ public class Client implements IClient{
             String commandFg = axes.get(command)+ value + "\r\n";
             outputWriter.print(commandFg);
             outputWriter.flush();
-        } catch(Exception e) { }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getConnectionStatus() {

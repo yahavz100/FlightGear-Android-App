@@ -1,5 +1,6 @@
 package com.example.javaflightgearandroidapp;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.javaflightgearandroidapp.Model.ActiveClientModel;
@@ -119,30 +121,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Function connect to FlightGear server when button connect is clicked
-    public void connectToServer() {
-        //Create textView for IP
-        EditText ipEditText = findViewById(R.id.IPAddress);
-        String ipVal = ipEditText.getText().toString().trim();
+    public void connectToServer(View view) {
+        try {
+            //Create textView for IP
+            EditText ipEditText = findViewById(R.id.IPAddress);
+            String ipVal = ipEditText.getText().toString().trim();
 
-        //Create textView for Port
-        EditText portEditText = findViewById(R.id.port);
-        String portVal = portEditText.getText().toString().trim();
-        int intPortVal = Integer.parseInt(portVal);
+            //Create textView for Port
+            EditText portEditText = findViewById(R.id.port);
+            String portVal = portEditText.getText().toString().trim();
+            int intPortVal = Integer.parseInt(portVal);
 
-        handler.removeCallbacksAndMessages(null);
-        //Every second connect to server(in order to maintain connection status updated)
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                cvm.connect(ipVal, intPortVal);
-                connectionStatusTV.setText(cm.getConnectionStatus());
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
+            //Remove previous tasks from handler
+            handler.removeCallbacksAndMessages(null);
+            //Every second connect to server(in order to maintain connection status updated)
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    cvm.connect(ipVal, intPortVal);
+                    connectionStatusTV.setText(cm.getConnectionStatus());
+                    handler.postDelayed(this, delay);
+                }
+            }, delay);
+        }
+        catch(Exception e) {
+            //On exception pop error message to user
+            e.printStackTrace();
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage("Check your IP Address/Port, " +
+                    "maybe FlightGear Simulator server is down?");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
     }
 
     //Function terminate connection to FlightGear server when button is clicked
-    public void disconnectFromServer() {
-
+    public void disconnectFromServer(View view) {
+        //Remove previous tasks from handler and disconnect client from user
         handler.removeCallbacksAndMessages(null);
         handler.postDelayed(new Runnable() {
             public void run() {
