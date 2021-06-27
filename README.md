@@ -19,6 +19,9 @@ Min. version of Android 10 OS. (Tested ver. – Pixel 3a API 29)
 7. Hit connect button.<br/>
 Enjoy your flight :)
 
+Or simply download [APK file](https://github.com/yahavz100/JavaFlightGearAndroidApp/blob/master/InstallationAndPreview/FlightGearController.apk) and install on your device (On your own responsibility!).
+
+Step 2 Image:
 ![alt text](InstallationAndPreview/Capture1.JPG)
 
 ## Tools
