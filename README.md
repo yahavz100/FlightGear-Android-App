@@ -1,6 +1,6 @@
 # FlightGear Simulator Android App
 ## Intro
-This project is my implementation of an android application, which controlls remotely the FlightGear Simulator, based on MVVM architectural pattern.
+This project is my implementation of an android application, which controls remotely the FlightGear Simulator, based on MVVM architectural pattern.
 As a participant in Advanced Programming course at the University of Bar Ilan.
 
 ![alt text](InstallationAndPreview/Capture.JPG) ![alt text](InstallationAndPreview/Capture2.JPG)
@@ -15,7 +15,7 @@ Min. version of Android 10 OS. (Tested ver. – Pixel 3a API 29)
 3. Open Android Studio and start the application on your emulator (recommended - Pixel 3a API 29).
 4. Start FlightGear Simulator.
 5. Build and run the project from Android Studio.
-6. Enter your IPv4 adrress and port(as mentioned in step 2).
+6. Enter your IPv4 address and port(as mentioned in step 2).
 7. Hit connect button.<br/>
 Enjoy your flight :)
 
